@@ -1,14 +1,13 @@
-package day01
+package tools
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
 	"strconv"
 )
 
-func readFile(path string) []string {
+func ReadFile(path string) []string {
 	file, err := os.Open(path)
 	if err != nil {
 		log.Fatalf("failed opening file: %s", err)
@@ -25,23 +24,7 @@ func readFile(path string) []string {
 	return txtlines
 }
 
-func Goooo() {
-	fmt.Println("--------- DAY 02 ---------")
-	lines := readFile("days/day01/input.txt")
-	ints := convertIntoInts(lines)
-
-	for _, x := range ints {
-		for _, y := range ints {
-			for _, z := range ints {
-				if x+y+z == 2020 {
-					fmt.Printf("%d + %d + %d = %d -> %d\n", x, y, z, x+y+z, x*y*z)
-				}
-			}
-		}
-	}
-}
-
-func convertIntoInts(lines []string) []int {
+func ConvertIntoInts(lines []string) []int {
 	ints := []int{}
 	for _, s := range lines {
 		i, err := strconv.Atoi(s)
