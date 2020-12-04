@@ -1,4 +1,4 @@
-package Day2
+package Day02
 
 import (
 	"Go-AdventOfCode2020/tools"
@@ -47,8 +47,8 @@ func check2(test string) bool {
 }
 
 func Goooo() {
-	fmt.Println("--------- DAY 03 ---------")
-	lines := tools.ReadFile(("days/day03/input.txt"))
+	fmt.Println("--------- DAY 02 ---------")
+	lines := tools.ReadFile(("days/Day02/input.txt"))
 
 	i := 0
 	for _, line := range lines {
