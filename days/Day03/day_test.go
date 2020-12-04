@@ -14,7 +14,3 @@ func TestData1(t *testing.T) {
 		assert.Equal(t, s.testNo, no, fmt.Sprintf("%d, %d = %d ERR", s.x, s.y, no))
 	}
 }
-
-func TestData2(t *testing.T) {
-
-}

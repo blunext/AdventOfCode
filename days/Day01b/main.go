@@ -7,14 +7,15 @@ import (
 
 func Goooo() {
 	fmt.Println("--------- DAY 02 ---------")
-
-	lines := tools.ReadFile("days/day01/input.txt")
+	lines := tools.ReadFile(("days/Day01/input.txt"))
 	ints := tools.ConvertIntoInts(lines)
 
 	for _, x := range ints {
 		for _, y := range ints {
-			if x+y == 2020 {
-				fmt.Printf("%d + %d = %d -> %d\n", x, y, x+y, x*y)
+			for _, z := range ints {
+				if x+y+z == 2020 {
+					fmt.Printf("%d + %d + %d = %d -> %d\n", x, y, z, x+y+z, x*y*z)
+				}
 			}
 		}
 	}
