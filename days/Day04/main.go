@@ -62,7 +62,7 @@ func goooo2() {
 	for _, line := range passLines {
 		pass := lineToPassword(line)
 		if checkFields(pass) {
-			fmt.Println(line)
+			//fmt.Println(line)
 			count += 1
 		}
 	}
