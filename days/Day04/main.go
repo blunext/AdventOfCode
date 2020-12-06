@@ -31,7 +31,7 @@ func Goooo() {
 	lines := tools.ReadFile(("days/Day04/input.txt"))
 
 	count := 0
-	passports := processPassLines(lines)
+	passports := tools.CombineLines(lines)
 	for _, line := range passports {
 		ok := true
 		for field, param := range fieldsDefinition {
@@ -58,7 +58,7 @@ func goooo2() {
 	lines := tools.ReadFile(("days/Day04/input.txt"))
 	//lines := tools.ReadFile(("days/Day04/testInputb.txt"))
 	count := 0
-	passLines := processPassLines(lines)
+	passLines := tools.CombineLines(lines)
 	for _, line := range passLines {
 		pass := lineToPassword(line)
 		if checkFields(pass) {
@@ -94,22 +94,4 @@ func lineToPassword(line string) passport {
 		pass[fieldParts[0]] = fieldParts[1]
 	}
 	return pass
-}
-
-func processPassLines(lines []string) []string {
-	passports := []string{}
-	new := true
-	for _, line := range lines {
-		if line == "" {
-			new = true
-			continue
-		}
-		if new {
-			passports = append(passports, line)
-			new = false
-			continue
-		}
-		passports[len(passports)-1] = passports[len(passports)-1] + " " + line
-	}
-	return passports
 }

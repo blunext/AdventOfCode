@@ -47,7 +47,7 @@ func Goooo() {
 			_, ok1 := seats[i-1]
 			_, ok2 := seats[i+1]
 			if ok1 && ok2 {
-				fmt.Printf("seat: %d", i)
+				fmt.Printf("seat: %d\n", i)
 			}
 		}
 

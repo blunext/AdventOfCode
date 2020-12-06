@@ -35,3 +35,21 @@ func ConvertIntoInts(lines []string) []int {
 	}
 	return ints
 }
+
+func CombineLines(lines []string) []string {
+	set := []string{}
+	new := true
+	for _, line := range lines {
+		if line == "" {
+			new = true
+			continue
+		}
+		if new {
+			set = append(set, line)
+			new = false
+			continue
+		}
+		set[len(set)-1] = set[len(set)-1] + " " + line
+	}
+	return set
+}
