@@ -32,20 +32,14 @@ func digit() check {
 
 func length(v int) check {
 	return func(s string) bool {
-		if len(s) != v {
-			return false
-		}
-		return true
+		return len(s) == v
 	}
 }
 
 func span(min, max int) check {
 	return func(s string) bool {
 		d, _ := strconv.Atoi(s)
-		if d < min || d > max {
-			return false
-		}
-		return true
+		return d >= min && d <= max
 	}
 }
 

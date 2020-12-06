@@ -18,7 +18,7 @@ func Goooo() {
 		a += countLetters(entry)
 		b += countSame(entry)
 	}
-	fmt.Printf("a=%d, a=%d\n", a, b)
+	fmt.Printf("a=%d, b=%d\n", a, b)
 }
 
 func countLetters(entry string) int {
