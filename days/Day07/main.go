@@ -8,25 +8,28 @@ import (
 
 type bag struct {
 	name     string
-	contains []*bag
+	contains *bag
 }
 
 func newBag(name string) *bag {
 	return &bag{name: name}
 }
 
-func (b *bag) find(bag *bag) bool {
-	for _, bagItem := range b.contains {
-		switch bagItem {
-		case bag:
-			//fmt.Printf("%v !!!! ", b.name)
-			return true
-		default:
-			//fmt.Printf("%v > ", b.name)
-			return bagItem.find(bag)
-		}
+func (b *bag) find(name string) bool {
+	switch {
+	case b.name == name:
+		return true
+	case b.contains == nil:
+		return false
+	default:
+		return b.contains.find(name)
 	}
-	return false
+}
+
+func (b *bag) add(name string) *bag {
+	bag := newBag(name)
+	b.contains = bag
+	return bag
 }
 
 type bagsHolder struct {
@@ -36,50 +39,30 @@ type bagsHolder struct {
 func newBagHolder() *bagsHolder {
 	return &bagsHolder{bags: make(map[string]*bag)}
 }
-func (b *bagsHolder) addOuterBag(name string) *bag {
-	if found, ok := b.bags[name]; ok {
+func (h *bagsHolder) addOuterBag(name string) *bag {
+	if found, ok := h.bags[name]; ok {
+		panic("outter bag found")
 		return found
 	}
 	bag := newBag(name)
-	b.bags[name] = bag
+	h.bags[name] = bag
 	return bag
 }
 
-func (b *bagsHolder) addBag(bag *bag, name string) *bag {
-	if found, ok := b.bags[name]; ok {
-		for _, has := range bag.contains {
-			if has == found {
-				return found
-			}
-		}
-		bag.contains = append(bag.contains, found)
-		return found
-	}
-	newBag := newBag(name)
-	b.bags[name] = newBag
-	bag.contains = append(bag.contains, newBag)
-	return newBag
-}
-
-func (b *bagsHolder) countBagsHolding(name string) int {
+func (h *bagsHolder) countBagsHolding(name string) int {
 	i := 0
-	if bagSearched, ok := b.bags[name]; ok {
-		//fmt.Printf("%v > ", bagSearched.name)
-		for _, bag := range b.bags {
-			if bag.find(bagSearched) {
-				i++
-			}
-			//fmt.Println()
+	for _, bag := range h.bags {
+		if bag.find(name) {
+			i++
 		}
-		return i
 	}
-	panic("cannot find bag " + name)
+	return i
 }
 
 func Goooo() {
 	fmt.Println("--------- DAY 07 ---------")
-	//lines := tools.ReadFile(("days/Day07/testinput.txt"))
-	lines := tools.ReadFile(("days/Day07/input.txt"))
+	lines := tools.ReadFile(("days/Day07/testinput.txt"))
+	//lines := tools.ReadFile(("days/Day07/input.txt"))
 
 	holder := newBagHolder()
 	for _, line := range lines {
@@ -99,7 +82,7 @@ func Goooo() {
 				// expected number as first byte, second is space
 				panic(fmt.Sprintf("rule broken - first byte number, second byte space : %v", b))
 			}
-			bag = holder.addBag(bag, (b[2:]))
+			bag = bag.add(b[2:])
 		}
 	}
 
