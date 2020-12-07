@@ -39,9 +39,6 @@ func (h *bagsHolder) check(holder, name string) bool {
 			return true
 		}
 		//fmt.Printf(" >> ")
-		if bagName == "dim brown" || bagName == "wavy yellow" || bagName == "clear fuchsia" || bagName == "striped lavender" {
-			fmt.Println(bagName)
-		}
 		if h.check(bagName, name) {
 			return true
 		}
@@ -54,6 +51,15 @@ func Goooo() {
 	//lines := tools.ReadFile(("days/Day07/testinput.txt"))
 	lines := tools.ReadFile(("days/Day07/input.txt"))
 
+	holder := populateData(lines)
+	fmt.Printf("count part a=%d\n", holder.countBagsHolding("shiny gold"))
+
+	lines = tools.ReadFile(("days/Day07/testinput2.txt"))
+	holder = populateData(lines)
+
+}
+
+func populateData(lines []string) *bagsHolder {
 	holder := newBagHolder()
 	for _, line := range lines {
 		lineWithoutEndingDot := line[:len(line)-1]
@@ -77,10 +83,7 @@ func Goooo() {
 			holder.addInnerBag(outerBag, b[2:])
 		}
 	}
-
-	fmt.Printf("count=%d\n", holder.countBagsHolding("shiny gold"))
-
-	//Seven()
+	return holder
 }
 
 func clean(innerBag string) string {
