@@ -3,19 +3,25 @@ package Day07
 import (
 	"Go-AdventOfCode2020/tools"
 	"fmt"
+	"strconv"
 	"strings"
 )
 
+type bag struct {
+	name     string
+	quantity int
+}
 type bagsHolder struct {
-	bags map[string][]string
+	bags map[string][]bag
 }
 
 func newBagHolder() *bagsHolder {
-	return &bagsHolder{bags: make(map[string][]string)}
+	return &bagsHolder{bags: make(map[string][]bag)}
 }
 
-func (h *bagsHolder) addInnerBag(outerBag, innerBag string) {
-	h.bags[outerBag] = append(h.bags[outerBag], innerBag)
+func (h *bagsHolder) addInnerBag(outerBag, innerBag string, quantity int) {
+	bag := bag{name: innerBag, quantity: quantity}
+	h.bags[outerBag] = append(h.bags[outerBag], bag)
 }
 
 func (h *bagsHolder) countBagsHolding(name string) int {
@@ -32,14 +38,15 @@ func (h *bagsHolder) countBagsHolding(name string) int {
 
 func (h *bagsHolder) check(holder, name string) bool {
 	bag, _ := h.bags[holder]
-	for _, bagName := range bag {
+	for _, innerBag := range bag {
 		//fmt.Printf(" %v ", bagName)
-		if bagName == name {
+
+		if innerBag.name == name {
 			//fmt.Printf(" ### OK ###")
 			return true
 		}
 		//fmt.Printf(" >> ")
-		if h.check(bagName, name) {
+		if h.check(innerBag.name, name) {
 			return true
 		}
 	}
@@ -80,7 +87,8 @@ func populateData(lines []string) *bagsHolder {
 				panic(fmt.Sprintf("rule broken - first byte number, second byte space : %v", b))
 			}
 			//bag = bag.add(b[2:])
-			holder.addInnerBag(outerBag, b[2:])
+			quantity, _ := strconv.Atoi(b[:1])
+			holder.addInnerBag(outerBag, b[2:], int(quantity))
 		}
 	}
 	return holder
