@@ -6,70 +6,61 @@ import (
 	"strings"
 )
 
-type bag struct {
-	name     string
-	contains *bag
-}
-
-func newBag(name string) *bag {
-	return &bag{name: name}
-}
-
-func (b *bag) find(name string) bool {
-	switch {
-	case b.name == name:
-		return true
-	case b.contains == nil:
-		return false
-	default:
-		return b.contains.find(name)
-	}
-}
-
-func (b *bag) add(name string) *bag {
-	bag := newBag(name)
-	b.contains = bag
-	return bag
-}
-
 type bagsHolder struct {
-	bags map[string]*bag
+	bags map[string][]string
 }
 
 func newBagHolder() *bagsHolder {
-	return &bagsHolder{bags: make(map[string]*bag)}
+	return &bagsHolder{bags: make(map[string][]string)}
 }
-func (h *bagsHolder) addOuterBag(name string) *bag {
-	if found, ok := h.bags[name]; ok {
-		panic("outter bag found")
-		return found
-	}
-	bag := newBag(name)
-	h.bags[name] = bag
-	return bag
+
+func (h *bagsHolder) addInnerBag(outerBag, innerBag string) {
+	h.bags[outerBag] = append(h.bags[outerBag], innerBag)
 }
 
 func (h *bagsHolder) countBagsHolding(name string) int {
 	i := 0
-	for _, bag := range h.bags {
-		if bag.find(name) {
+	for holderName, _ := range h.bags {
+		//fmt.Printf("%v: ", holderName)
+		if h.check(holderName, name) {
 			i++
 		}
+		//fmt.Println()
 	}
 	return i
 }
 
+func (h *bagsHolder) check(holder, name string) bool {
+	bag, _ := h.bags[holder]
+	for _, bagName := range bag {
+		//fmt.Printf(" %v ", bagName)
+		if bagName == name {
+			//fmt.Printf(" ### OK ###")
+			return true
+		}
+		//fmt.Printf(" >> ")
+		if bagName == "dim brown" || bagName == "wavy yellow" || bagName == "clear fuchsia" || bagName == "striped lavender" {
+			fmt.Println(bagName)
+		}
+		if h.check(bagName, name) {
+			return true
+		}
+	}
+	return false
+}
+
 func Goooo() {
 	fmt.Println("--------- DAY 07 ---------")
-	lines := tools.ReadFile(("days/Day07/testinput.txt"))
-	//lines := tools.ReadFile(("days/Day07/input.txt"))
+	//lines := tools.ReadFile(("days/Day07/testinput.txt"))
+	lines := tools.ReadFile(("days/Day07/input.txt"))
 
 	holder := newBagHolder()
 	for _, line := range lines {
 		lineWithoutEndingDot := line[:len(line)-1]
 
 		bagData := strings.Split(lineWithoutEndingDot, "contain")
-		bag := holder.addOuterBag(clean(bagData[0]))
+		outerBag := clean(bagData[0])
+		//holder.addOuterBag(outerBag)
 
 		contains := strings.Split(bagData[1], ",")
 		for _, innerBag := range contains {
@@ -82,11 +73,14 @@ func Goooo() {
 				// expected number as first byte, second is space
 				panic(fmt.Sprintf("rule broken - first byte number, second byte space : %v", b))
 			}
-			bag = bag.add(b[2:])
+			//bag = bag.add(b[2:])
+			holder.addInnerBag(outerBag, b[2:])
 		}
 	}
 
 	fmt.Printf("count=%d\n", holder.countBagsHolding("shiny gold"))
+
+	//Seven()
 }
 
 func clean(innerBag string) string {
