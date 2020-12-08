@@ -24,13 +24,13 @@ type nop struct {
 	value int
 }
 
-func NewNop(v int) *nop {
-	return &nop{value: v}
+func NewNop(v int) nop {
+	return nop{value: v}
 }
-func (n *nop) process(l line, a acumulator) (line, acumulator) {
+func (n nop) process(l line, a acumulator) (line, acumulator) {
 	return l + 1, a
 }
-func (n *nop) getValue() int {
+func (n nop) getValue() int {
 	return n.value
 }
 
@@ -39,13 +39,13 @@ type jmp struct {
 	value int
 }
 
-func NewJmp(v int) *jmp {
-	return &jmp{value: v}
+func NewJmp(v int) jmp {
+	return jmp{value: v}
 }
-func (j *jmp) process(l line, acu acumulator) (line, acumulator) {
+func (j jmp) process(l line, acu acumulator) (line, acumulator) {
 	return l + line(j.value), acu
 }
-func (j *jmp) getValue() int {
+func (j jmp) getValue() int {
 	return j.value
 }
 
@@ -54,13 +54,13 @@ type acc struct {
 	value int
 }
 
-func NewAcc(v int) *acc {
-	return &acc{value: v}
+func NewAcc(v int) acc {
+	return acc{value: v}
 }
-func (a *acc) process(l line, acu acumulator) (line, acumulator) {
+func (a acc) process(l line, acu acumulator) (line, acumulator) {
 	return l + 1, acu + acumulator(a.value)
 }
-func (a *acc) getValue() int {
+func (a acc) getValue() int {
 	return a.value
 }
 
@@ -79,16 +79,16 @@ func Goooo() {
 		var newAction action
 
 		switch v := instruction.(type) {
-		case *acc:
+		case acc:
 			newAction, prevAction = v, v
-		case *jmp:
+		case jmp:
 			prevAction = v
 			newAction = NewNop(v.getValue())
-		case *nop:
+		case nop:
 			prevAction = v
 			newAction = NewJmp(v.getValue())
 		default:
-			panic("sth wrong")
+			panic("sth wrong...")
 		}
 
 		myProgram.lines[i] = newAction
