@@ -13,15 +13,17 @@ type acumulator int
 type action interface {
 	process(line, acumulator) (line, acumulator)
 	wasHere() bool
+	getValue() int
 }
 
 //---
 type nop struct {
+	value   int
 	visited bool
 }
 
-func NewNop() *nop {
-	return &nop{}
+func NewNop(v int) *nop {
+	return &nop{value: v}
 }
 func (n *nop) process(l line, a acumulator) (line, acumulator) {
 	n.visited = true
@@ -29,6 +31,9 @@ func (n *nop) process(l line, a acumulator) (line, acumulator) {
 }
 func (n *nop) wasHere() bool {
 	return n.visited
+}
+func (n *nop) getValue() int {
+	return n.value
 }
 
 //----
@@ -47,6 +52,9 @@ func (j *jmp) process(l line, acu acumulator) (line, acumulator) {
 func (j *jmp) wasHere() bool {
 	return j.visited
 }
+func (j *jmp) getValue() int {
+	return j.value
+}
 
 //----
 type acc struct {
@@ -64,6 +72,9 @@ func (a *acc) process(l line, acu acumulator) (line, acumulator) {
 func (a *acc) wasHere() bool {
 	return a.visited
 }
+func (a *acc) getValue() int {
+	return a.value
+}
 
 //----
 
@@ -73,19 +84,39 @@ type program struct {
 
 func Goooo() {
 	fmt.Println("--------- DAY 08 ---------")
-	//lines := tools.ReadFile(("days/Day08/testInput.txt"))
-	lines := tools.ReadFile(("days/Day08/Input.txt"))
+	lines := tools.ReadFile(("days/Day08/testInput.txt"))
+	//lines := tools.ReadFile(("days/Day08/Input.txt"))
 
-	program := populateProgram(lines)
-	acc, finished := run(program)
-	fmt.Printf("Part1: finished: %v, accumulator: %d", finished, acc)
-	//
-	//for _, instruction := range program.lines {
-	//	if in
-	//	acc, finished = run(program)
-	//
-	//}
-	fmt.Printf("Part2: finished: %v, accumulator: %d", finished, acc)
+	myProgram := populateProgram(lines)
+
+	acum, finished := run(myProgram)
+	fmt.Printf("Part1: finished: %v, accumulator: %d\n", finished, acum)
+
+	for i, instruction := range myProgram.lines {
+
+		var prevAction action
+		var newAction action
+
+		switch v := instruction.(type) {
+		case *acc:
+		case *jmp:
+			prevAction = v
+			newAction = NewNop(v.getValue())
+		case *nop:
+			prevAction = v
+			newAction = NewJmp(v.getValue())
+		default:
+			panic("sth wrong")
+		}
+
+		myProgram.lines[i] = newAction
+		acum, finished = run(myProgram)
+		if finished {
+			break
+		}
+		myProgram.lines[i] = prevAction
+	}
+	fmt.Printf("Part2: finished: %v, accumulator: %d\n", finished, acum)
 }
 
 func run(program program) (acumulator, bool) {
@@ -94,6 +125,11 @@ func run(program program) (acumulator, bool) {
 	var acc acumulator
 
 	for {
+		if int(line) > len(program.lines) || int(line) < 0 {
+			fmt.Println("my program index is out of range")
+			finished = false
+			break
+		}
 		if program.lines[line].wasHere() {
 			finished = false
 			break
@@ -105,7 +141,6 @@ func run(program program) (acumulator, bool) {
 
 func populateProgram(lines []string) program {
 	program := program{}
-
 	for _, line := range lines {
 		tokens := strings.Split(line, " ")
 		i, _ := strconv.Atoi(tokens[1])
@@ -114,7 +149,7 @@ func populateProgram(lines []string) program {
 
 		switch tokens[0] {
 		case "nop":
-			instruction = NewNop()
+			instruction = NewNop(i)
 		case "acc":
 			instruction = NewAcc(i)
 		case "jmp":
@@ -123,6 +158,7 @@ func populateProgram(lines []string) program {
 			panic("sth wrong")
 		}
 		program.lines = append(program.lines, instruction)
+
 	}
 	return program
 }
