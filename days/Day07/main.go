@@ -53,6 +53,22 @@ func (h *bagsHolder) check(holder, name string) bool {
 	return false
 }
 
+//--------------------------
+
+func (h *bagsHolder) countInnerBags(name string) int {
+	i := 1
+	base, _ := h.bags[name]
+	for _, bag := range base {
+		if bag.quantity == 0 {
+			continue
+		}
+		//fmt.Printf("%v:%d ", bag.name, bag.quantity)
+		innerCount := h.countInnerBags(bag.name)
+		i += bag.quantity * innerCount
+	}
+	return i
+}
+
 func Goooo() {
 	fmt.Println("--------- DAY 07 ---------")
 	//lines := tools.ReadFile(("days/Day07/testinput.txt"))
@@ -61,9 +77,9 @@ func Goooo() {
 	holder := populateData(lines)
 	fmt.Printf("count part a=%d\n", holder.countBagsHolding("shiny gold"))
 
-	lines = tools.ReadFile(("days/Day07/testinput2.txt"))
+	lines = tools.ReadFile(("days/Day07/input.txt"))
 	holder = populateData(lines)
-
+	fmt.Printf("count part b=%d\n", holder.countInnerBags("shiny gold")-1)
 }
 
 func populateData(lines []string) *bagsHolder {
@@ -80,6 +96,7 @@ func populateData(lines []string) *bagsHolder {
 			b := clean(innerBag)
 			if b == "no other" {
 				// was "no other bags" but bags word is removed
+				holder.addInnerBag(outerBag, "", 0)
 				continue
 			}
 			if b[1:2] != " " {
