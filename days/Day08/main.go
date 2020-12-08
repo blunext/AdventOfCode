@@ -8,10 +8,10 @@ import (
 )
 
 type line int
-type acumulator int
+type accumulator int
 
 type action interface {
-	process(line, acumulator) (line, acumulator)
+	process(line, accumulator) (line, accumulator)
 	getValue() int
 }
 
@@ -27,7 +27,7 @@ type nop struct {
 func NewNop(v int) nop {
 	return nop{value: v}
 }
-func (n nop) process(l line, a acumulator) (line, acumulator) {
+func (n nop) process(l line, a accumulator) (line, accumulator) {
 	return l + 1, a
 }
 func (n nop) getValue() int {
@@ -42,7 +42,7 @@ type jmp struct {
 func NewJmp(v int) jmp {
 	return jmp{value: v}
 }
-func (j jmp) process(l line, acu acumulator) (line, acumulator) {
+func (j jmp) process(l line, acu accumulator) (line, accumulator) {
 	return l + line(j.value), acu
 }
 func (j jmp) getValue() int {
@@ -57,8 +57,8 @@ type acc struct {
 func NewAcc(v int) acc {
 	return acc{value: v}
 }
-func (a acc) process(l line, acu acumulator) (line, acumulator) {
-	return l + 1, acu + acumulator(a.value)
+func (a acc) process(l line, acu accumulator) (line, accumulator) {
+	return l + 1, acu + accumulator(a.value)
 }
 func (a acc) getValue() int {
 	return a.value
@@ -101,9 +101,9 @@ func Goooo() {
 	fmt.Printf("Part2: finished: %v, accumulator: %d\n", finished, acum)
 }
 
-func run(program program) (acumulator, bool) {
+func run(program program) (accumulator, bool) {
 	var ln line
-	var acc acumulator
+	var acc accumulator
 	finished := true
 	visited := make(map[line]bool)
 	for {
