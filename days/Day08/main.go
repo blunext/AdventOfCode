@@ -68,7 +68,7 @@ func (a *acc) wasHere() bool {
 //----
 
 type program struct {
-	line []action
+	lines []action
 }
 
 func Goooo() {
@@ -77,18 +77,30 @@ func Goooo() {
 	lines := tools.ReadFile(("days/Day08/Input.txt"))
 
 	program := populateProgram(lines)
+	acc, finished := run(program)
+	fmt.Printf("Part1: finished: %v, accumulator: %d", finished, acc)
+	//
+	//for _, instruction := range program.lines {
+	//	if in
+	//	acc, finished = run(program)
+	//
+	//}
+	fmt.Printf("Part2: finished: %v, accumulator: %d", finished, acc)
+}
 
+func run(program program) (acumulator, bool) {
+	finished := true
 	var line line
 	var acc acumulator
 
 	for {
-		if program.line[line].wasHere() {
-			fmt.Printf("accumulator: %d", acc)
+		if program.lines[line].wasHere() {
+			finished = false
 			break
 		}
-		line, acc = program.line[line].process(line, acc)
+		line, acc = program.lines[line].process(line, acc)
 	}
-
+	return acc, finished
 }
 
 func populateProgram(lines []string) program {
@@ -110,7 +122,7 @@ func populateProgram(lines []string) program {
 		default:
 			panic("sth wrong")
 		}
-		program.line = append(program.line, instruction)
+		program.lines = append(program.lines, instruction)
 	}
 	return program
 }
