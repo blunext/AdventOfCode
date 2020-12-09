@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type line int
@@ -69,6 +70,7 @@ func Goooo() {
 	//lines := tools.ReadFile(("days/Day08/testInput.txt"))
 	lines := tools.ReadFile(("days/Day08/Input.txt"))
 
+	start := time.Now()
 	myProgram := populateProgram(lines)
 
 	acum, finished := run(myProgram)
@@ -98,7 +100,8 @@ func Goooo() {
 		}
 		myProgram.lines[i] = prevAction
 	}
-	fmt.Printf("Part2: finished: %v, accumulator: %d\n", finished, acum)
+	duration := time.Since(start)
+	fmt.Printf("Part2: finished: %v, accumulator: %d, time: %v\n", finished, acum, duration)
 }
 
 func run(program program) (accumulator, bool) {
