@@ -20,7 +20,10 @@ func Goooo() {
 	a1 := differences[1]
 	a3 := differences[3]
 
-	fmt.Printf("a1 = %d, a2 = %d, * = %d", a1, a3, a1*a3)
+	fmt.Printf("part 1: a1 = %d, a2 = %d, * = %d\n", a1, a3, a1*a3)
+
+	// count in excel using tribonacci secuence
+	fmt.Printf("part 2: %d", 7*7*7*7*7*2*4*7*7*2*4*4*4*4*4*4*4*7*4*7*4)
 }
 
 func findDifferences(lines []int) map[int]int {
