@@ -7,7 +7,7 @@ import (
 )
 
 func Goooo() {
-	fmt.Println("--------- DAY 09 ---------")
+	fmt.Println("--------- DAY 10 ---------\n")
 
 	//lines := tools.ConvertIntoInts(tools.ReadFile(("days/Day10/testInput.txt")))
 	lines := tools.ConvertIntoInts(tools.ReadFile(("days/Day10/input.txt")))
@@ -22,8 +22,8 @@ func Goooo() {
 
 	fmt.Printf("part 1: a1 = %d, a2 = %d, * = %d\n", a1, a3, a1*a3)
 
-	// count in excel using tribonacci secuence
-	fmt.Printf("part 2: %d", 7*7*7*7*7*2*4*7*7*2*4*4*4*4*4*4*4*7*4*7*4)
+	// count in excel using tribonacci sequence
+	fmt.Printf("part 2: %d\n", 7*7*7*7*7*2*4*7*7*2*4*4*4*4*4*4*4*7*4*7*4)
 }
 
 func findDifferences(lines []int) map[int]int {

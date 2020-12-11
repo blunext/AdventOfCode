@@ -12,6 +12,7 @@ import (
 	"Go-AdventOfCode2020/days/Day08"
 	"Go-AdventOfCode2020/days/Day09"
 	"Go-AdventOfCode2020/days/Day10"
+	"Go-AdventOfCode2020/days/Day11"
 )
 
 func main() {
@@ -26,4 +27,5 @@ func main() {
 	Day08.Goooo()
 	Day09.Goooo()
 	Day10.Goooo()
+	Day11.Goooo()
 }
