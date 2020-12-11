@@ -3,7 +3,6 @@ package Day09
 import (
 	"Go-AdventOfCode2020/tools"
 	"fmt"
-	"strconv"
 )
 
 func Goooo() {
@@ -15,7 +14,7 @@ func Goooo() {
 	preamble := 25
 	lines := tools.ReadFile(("days/Day09/input.txt"))
 
-	intLines := convert(lines)
+	intLines := tools.ConvertIntoInts(lines)
 
 	firstNumber := findFirstThatNotSUm(preamble, intLines)
 	fmt.Printf("%d\n", firstNumber)
@@ -76,16 +75,4 @@ func checkOneInRange(number int, slice []int) bool {
 		}
 	}
 	return false
-}
-
-func convert(lines []string) []int {
-
-	intLines := []int{}
-
-	for _, line := range lines {
-		val, _ := strconv.Atoi(line)
-		intLines = append(intLines, val)
-
-	}
-	return intLines
 }
