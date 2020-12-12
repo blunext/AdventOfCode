@@ -12,34 +12,33 @@ func Goooo() {
 	lines := tools.ReadFile(("days/Day11/testInput.txt"))
 	//lines := tools.ReadFile(("days/Day11/input.txt"))
 
-	waiting := newWaitingArea()
-	waiting.addRow()
+	w := newWaitingArea()
+	w.addRow()
 
-	initMatrix(lines, waiting)
-	printState(waiting)
+	initMatrix(lines, w)
+	printState(w)
 	fmt.Println()
 
-	makeMoves(waiting)
-	printState(waiting)
+	makeMoves(w)
+	printState(w)
 	fmt.Println()
 
-	fmt.Println(countOcupied(waiting))
+	fmt.Println(countOcupied(w))
 }
 
-func makeMoves(waiting *waitingArea) {
+func makeMoves(w *waitingArea) {
 	for {
-		waiting.clearMovement()
-		for r := 0; r < waiting.rowsCount(); r++ {
-			for c := 0; c < waiting.colCount(); c++ {
-				waiting.makeDecision(r, c)
-			}
-		}
+		w.clearMovement()
 
-		waiting.flipMarked()
+		w.traverseAll(func(r, c int) {
+			w.makeDecision(r, c)
+		})
+
+		w.flipMarked()
 
 		//printState(waiting)
 
-		if !waiting.peopleMoved() {
+		if !w.peopleMoved() {
 			break
 		}
 		//time.Sleep(time.Second)
@@ -47,41 +46,41 @@ func makeMoves(waiting *waitingArea) {
 	}
 }
 
-func initMatrix(lines []string, waiting *waitingArea) {
+func initMatrix(lines []string, w *waitingArea) {
 	// add 1st row above + 1 floor left + 1 floor right
 	for i := 0; i < len(lines[0])+2; i++ {
-		waiting.addSeat(string("."))
+		w.addSeat(string("."))
 	}
 
 	for _, line := range lines {
-		waiting.addRow()
-		waiting.addSeat(string(".")) //left flour
+		w.addRow()
+		w.addSeat(string(".")) //left flour
 		for _, in := range line {
-			waiting.addSeat(string(in))
+			w.addSeat(string(in))
 		}
-		waiting.addSeat(string(".")) //right flour
+		w.addSeat(string(".")) //right flour
 	}
 
 	// add last empty row  + 1 floor left + 1 floor right
-	waiting.addRow()
+	w.addRow()
 	for i := 0; i < len(lines[0])+2; i++ {
-		waiting.addSeat(string("."))
+		w.addSeat(string("."))
 	}
 }
 
-func printState(waiting *waitingArea) {
-	for r := 0; r < waiting.rowsCount(); r++ {
-		for c := 0; c < waiting.colCount(); c++ {
-			fmt.Print(waiting.printSeat(r, c))
+func printState(w *waitingArea) {
+	for r := 0; r < w.rowsCount(); r++ {
+		for c := 0; c < w.colCount(); c++ {
+			fmt.Print(w.printSeat(r, c))
 		}
 		fmt.Println()
 	}
 }
 
-func countOcupied(waiting *waitingArea) int {
+func countOcupied(w *waitingArea) int {
 	count := 0
-	waiting.traverseAll(func(r, c int) {
-		if waiting.seats[r][c].state == occupied {
+	w.traverseAll(func(r, c int) {
+		if w.seats[r][c].state == occupied {
 			count++
 		}
 	})
