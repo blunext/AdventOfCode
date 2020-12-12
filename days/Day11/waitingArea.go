@@ -81,40 +81,33 @@ func (w *waitingArea) countOccupiedAround(r, c int) int {
 	return count
 }
 
-func (w *waitingArea) flipMarked() {
+func (w *waitingArea) traverseAll(process func(i, y int)) {
 	for r := 0; r < w.rowsCount(); r++ {
 		for c := 0; c < w.colCount(); c++ {
-			if w.seats[r][c].flip {
-				switch w.seats[r][c].state {
-				case occupied:
-					w.seats[r][c] = seat{state: empty}
-				case empty:
-					w.seats[r][c] = seat{state: occupied}
-				}
-			}
+			process(r, c)
 		}
 	}
 }
 
-func (w *waitingArea) rowsCount() int {
-	return len(w.seats)
-}
-func (w *waitingArea) colCount() int {
-	return len(w.seats[0])
-}
-
-func (w *waitingArea) peopleMoved() bool {
-	return w.moved
+func (w *waitingArea) flipMarked() {
+	w.traverseAll(func(r, c int) {
+		if w.seats[r][c].flip {
+			switch w.seats[r][c].state {
+			case occupied:
+				w.seats[r][c] = seat{state: empty}
+			case empty:
+				w.seats[r][c] = seat{state: occupied}
+			}
+		}
+	})
 }
 
 func (w *waitingArea) clearMovement() {
-	for r := 0; r < w.rowsCount(); r++ {
-		for c := 0; c < w.colCount(); c++ {
-			if w.seats[r][c].flip {
-				w.seats[r][c] = seat{flip: false}
-			}
+	w.traverseAll(func(r, c int) {
+		if w.seats[r][c].flip {
+			w.seats[r][c] = seat{flip: false}
 		}
-	}
+	})
 	w.moved = false
 }
 
@@ -129,4 +122,15 @@ func (w *waitingArea) printSeat(r, c int) string {
 	default:
 		return "ERROR"
 	}
+}
+
+func (w *waitingArea) rowsCount() int {
+	return len(w.seats)
+}
+func (w *waitingArea) colCount() int {
+	return len(w.seats[0])
+}
+
+func (w *waitingArea) peopleMoved() bool {
+	return w.moved
 }

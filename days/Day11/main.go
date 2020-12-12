@@ -71,13 +71,10 @@ func printState(waiting *waitingArea) {
 
 func countOcupied(waiting *waitingArea) int {
 	count := 0
-	for r := 0; r < waiting.rowsCount(); r++ {
-		for c := 0; c < waiting.colCount(); c++ {
-			if waiting.seats[r][c].state == occupied {
-				count++
-			}
+	waiting.traverseAll(func(r, c int) {
+		if waiting.seats[r][c].state == occupied {
+			count++
 		}
-
-	}
+	})
 	return count
 }
