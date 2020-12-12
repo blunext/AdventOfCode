@@ -18,14 +18,15 @@ var degrees = map[int]direction{
 }
 
 type ship struct {
-	x, y   int
-	hading int
+	x, y             int
+	hading           int
+	wPointX, wPointY int
 }
 
 func newShip() *ship {
-	return &ship{x: 0, y: 0, hading: 0}
+	return &ship{wPointX: 10, wPointY: 1}
 }
-func (s *ship) processIntruction(instr string) {
+func (s *ship) move(instr string) {
 	letter := instr[:1]
 	value, _ := strconv.Atoi(instr[1:])
 
@@ -55,14 +56,58 @@ func (s *ship) processIntruction(instr string) {
 		panic("Errr....")
 	}
 }
+func (s *ship) rotateWaypoint(d int, clockWise int) {
+	switch d {
+	case 90:
+		x := s.wPointX
+		s.wPointX = s.wPointY * clockWise
+		s.wPointY = -x * clockWise
+	case 180:
+		s.wPointX = -s.wPointX
+		s.wPointY = -s.wPointY
+	case 270:
+		x := s.wPointX
+		s.wPointX = -s.wPointY * clockWise
+		s.wPointY = x * clockWise
+	}
+}
 
+func (s *ship) moveWithWaypoint(instr string) {
+	letter := instr[:1]
+	value, _ := strconv.Atoi(instr[1:])
+	switch letter {
+	case "F":
+		s.x += s.wPointX * value
+		s.y += s.wPointY * value
+	case "R":
+		s.rotateWaypoint(value, 1)
+	case "L":
+		s.rotateWaypoint(value, -1)
+	case "N":
+		s.wPointY += value
+	case "S":
+		s.wPointY -= value
+	case "E":
+		s.wPointX += value
+	case "W":
+		s.wPointX -= value
+	default:
+		panic("Errr....")
+	}
+}
 func Goooo() {
 	fmt.Println("--------- DAY 12 ---------")
 	//lines := tools.ReadFile(("days/Day12/testInput.txt"))
 	lines := tools.ReadFile(("days/Day12/input.txt"))
 	ship := newShip()
 	for _, instr := range lines {
-		ship.processIntruction(instr)
+		ship.move(instr)
 	}
-	fmt.Printf("x=%d, y=%d", ship.x, ship.y)
+	fmt.Printf("x=%d, y=%d\n", ship.x, ship.y)
+
+	ship = newShip()
+	for _, instr := range lines {
+		ship.moveWithWaypoint(instr)
+	}
+	fmt.Printf("x=%d, y=%d\n", ship.x, ship.y)
 }
