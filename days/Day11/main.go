@@ -9,8 +9,8 @@ func Goooo() {
 	fmt.Println("--------- DAY 11 ---------")
 
 	//lines := tools.ConvertIntoInts(tools.ReadFile(("days/Day10/testInput.txt")))
-	lines := tools.ReadFile(("days/Day11/testInput.txt"))
-	//lines := tools.ReadFile(("days/Day11/input.txt"))
+	//lines := tools.ReadFile(("days/Day11/testInput.txt"))
+	lines := tools.ReadFile(("days/Day11/input.txt"))
 
 	w := newWaitingArea()
 	w.addRow()
@@ -31,12 +31,12 @@ func makeMoves(w *waitingArea) {
 		w.clearMovement()
 
 		w.traverseAll(func(r, c int) {
-			w.makeDecision(r, c)
+			w.makeDecision(r, c, false)
 		})
 
 		w.flipMarked()
 
-		//printState(waiting)
+		printState(w)
 
 		if !w.peopleMoved() {
 			break

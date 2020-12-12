@@ -8,14 +8,25 @@ const (
 	occupied
 )
 
+type vector struct {
+	x, y int
+}
+
+var directions = []vector{
+	{-1, -1}, {0, -1}, {1, -1},
+	{-1, 0}, {1, 0},
+	{-1, 1}, {0, 1}, {1, 1},
+}
+
 type seat struct {
 	state state
 	flip  bool
 }
 
 type waitingArea struct {
-	moved bool
-	seats [][]seat
+	moved      bool
+	seats      [][]seat
+	lookFurher bool
 }
 
 func newWaitingArea() *waitingArea {
@@ -44,14 +55,15 @@ func (w *waitingArea) addRow() {
 	w.seats = append(w.seats, []seat{})
 }
 
-func (w *waitingArea) makeDecision(r, c int) {
+func (w *waitingArea) makeDecision(r, c int, lookFurher bool) {
+	w.lookFurher = lookFurher
 	if w.seats[r][c].state == occupied {
-		if w.countOccupiedAround(r, c) >= 4 {
+		if w.countOccupiedAround2(r, c) >= 4 {
 			w.changeState(r, c)
 		}
 	}
 	if w.seats[r][c].state == empty {
-		if w.countOccupiedAround(r, c) == 0 {
+		if w.countOccupiedAround2(r, c) == 0 {
 			w.changeState(r, c)
 		}
 	}
@@ -63,6 +75,7 @@ func (w *waitingArea) changeState(r int, c int) {
 }
 
 func (w *waitingArea) countOccupiedAround(r, c int) int {
+
 	count := 0
 	for i := r - 1; i <= r+1; i++ {
 		if w.seats[i][c-1].state == occupied {
@@ -79,6 +92,30 @@ func (w *waitingArea) countOccupiedAround(r, c int) int {
 		count++
 	}
 	return count
+}
+func (w *waitingArea) countOccupiedAround2(r, c int) int {
+	count := 0
+	for _, v := range directions {
+		if w.lookIntoVectorDirection(r, c, v) {
+			count++
+		}
+	}
+
+	return count
+}
+
+func (w *waitingArea) lookIntoVectorDirection(r, c int, v vector) bool {
+	switch w.seats[r+v.x][c+v.y].state {
+	case occupied:
+		return true
+	case empty:
+		if w.lookFurher {
+			return w.lookIntoVectorDirection(r+v.x, c+v.y, v)
+		}
+		return false
+	default: // floor
+		return false
+	}
 }
 
 func (w *waitingArea) traverseAll(process func(i, y int)) {
