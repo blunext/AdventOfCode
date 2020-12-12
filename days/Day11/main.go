@@ -35,7 +35,7 @@ func Goooo() {
 	makeMoves(matrix2, 5, true)
 	//printState(matrix2)
 	//fmt.Println()
-	fmt.Printf("a:=%d", countOcupied(matrix2))
+	fmt.Printf("a:=%d\n", countOcupied(matrix2))
 
 }
 
