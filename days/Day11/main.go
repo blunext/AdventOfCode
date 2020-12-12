@@ -16,27 +16,39 @@ func Goooo() {
 	w.addRow()
 
 	initMatrix(lines, w)
-	printState(w)
+	//printState(w)
+	//fmt.Println()
+
+	makeMoves(w, 4, false)
+	//printState(w)
+	//fmt.Println()
+
+	fmt.Printf("a:=%d", countOcupied(w))
+
+	matrix2 := newWaitingArea()
+	matrix2.addRow()
+
+	initMatrix(lines, matrix2)
+	//printState(matrix2)
 	fmt.Println()
 
-	makeMoves(w)
-	printState(w)
-	fmt.Println()
+	makeMoves(matrix2, 5, true)
+	//printState(matrix2)
+	//fmt.Println()
+	fmt.Printf("a:=%d", countOcupied(matrix2))
 
-	fmt.Println(countOcupied(w))
 }
 
-func makeMoves(w *waitingArea) {
+func makeMoves(w *waitingArea, occupiedAcceptance int, lookFurther bool) {
 	for {
 		w.clearMovement()
 
 		w.traverseAll(func(r, c int) {
-			w.makeDecision(r, c, false)
+			w.makeDecision(r, c, occupiedAcceptance, lookFurther)
 		})
 
 		w.flipMarked()
-
-		printState(w)
+		//printState(w)
 
 		if !w.peopleMoved() {
 			break

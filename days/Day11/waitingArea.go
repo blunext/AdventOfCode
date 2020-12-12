@@ -55,15 +55,15 @@ func (w *waitingArea) addRow() {
 	w.seats = append(w.seats, []seat{})
 }
 
-func (w *waitingArea) makeDecision(r, c int, lookFurher bool) {
-	w.lookFurher = lookFurher
+func (w *waitingArea) makeDecision(r, c, occupiedAcceptance int, lookFurther bool) {
+	w.lookFurher = lookFurther
 	if w.seats[r][c].state == occupied {
-		if w.countOccupiedAround2(r, c) >= 4 {
+		if w.countOccupiedAround(r, c) >= occupiedAcceptance {
 			w.changeState(r, c)
 		}
 	}
 	if w.seats[r][c].state == empty {
-		if w.countOccupiedAround2(r, c) == 0 {
+		if w.countOccupiedAround(r, c) == 0 {
 			w.changeState(r, c)
 		}
 	}
@@ -75,25 +75,6 @@ func (w *waitingArea) changeState(r int, c int) {
 }
 
 func (w *waitingArea) countOccupiedAround(r, c int) int {
-
-	count := 0
-	for i := r - 1; i <= r+1; i++ {
-		if w.seats[i][c-1].state == occupied {
-			count++
-		}
-		if w.seats[i][c+1].state == occupied {
-			count++
-		}
-	}
-	if w.seats[r-1][c].state == occupied {
-		count++
-	}
-	if w.seats[r+1][c].state == occupied {
-		count++
-	}
-	return count
-}
-func (w *waitingArea) countOccupiedAround2(r, c int) int {
 	count := 0
 	for _, v := range directions {
 		if w.lookIntoVectorDirection(r, c, v) {
@@ -105,15 +86,23 @@ func (w *waitingArea) countOccupiedAround2(r, c int) int {
 }
 
 func (w *waitingArea) lookIntoVectorDirection(r, c int, v vector) bool {
-	switch w.seats[r+v.x][c+v.y].state {
+	newR := r + v.y
+	newC := c + v.x
+	if newR < 0 || newR >= w.rowsCount() {
+		return false
+	}
+	if newC < 0 || newC >= w.colCount() {
+		return false
+	}
+	switch w.seats[newR][newC].state {
 	case occupied:
 		return true
 	case empty:
-		if w.lookFurher {
-			return w.lookIntoVectorDirection(r+v.x, c+v.y, v)
-		}
 		return false
 	default: // floor
+		if w.lookFurher {
+			return w.lookIntoVectorDirection(newR, newC, v)
+		}
 		return false
 	}
 }
