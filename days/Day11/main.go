@@ -9,12 +9,45 @@ func Goooo() {
 	fmt.Println("--------- DAY 11 ---------")
 
 	//lines := tools.ConvertIntoInts(tools.ReadFile(("days/Day10/testInput.txt")))
-	//lines := tools.ReadFile(("days/Day11/testInput.txt"))
-	lines := tools.ReadFile(("days/Day11/input.txt"))
+	lines := tools.ReadFile(("days/Day11/testInput.txt"))
+	//lines := tools.ReadFile(("days/Day11/input.txt"))
 
 	waiting := newWaitingArea()
 	waiting.addRow()
 
+	initMatrix(lines, waiting)
+	printState(waiting)
+	fmt.Println()
+
+	makeMoves(waiting)
+	printState(waiting)
+	fmt.Println()
+
+	fmt.Println(countOcupied(waiting))
+}
+
+func makeMoves(waiting *waitingArea) {
+	for {
+		waiting.clearMovement()
+		for r := 0; r < waiting.rowsCount(); r++ {
+			for c := 0; c < waiting.colCount(); c++ {
+				waiting.makeDecision(r, c)
+			}
+		}
+
+		waiting.flipMarked()
+
+		//printState(waiting)
+
+		if !waiting.peopleMoved() {
+			break
+		}
+		//time.Sleep(time.Second)
+		//fmt.Println()
+	}
+}
+
+func initMatrix(lines []string, waiting *waitingArea) {
 	// add 1st row above + 1 floor left + 1 floor right
 	for i := 0; i < len(lines[0])+2; i++ {
 		waiting.addSeat(string("."))
@@ -34,30 +67,6 @@ func Goooo() {
 	for i := 0; i < len(lines[0])+2; i++ {
 		waiting.addSeat(string("."))
 	}
-
-	printState(waiting)
-	fmt.Println()
-
-	for {
-		waiting.clearMovement()
-		for r := 0; r < waiting.rowsCount(); r++ {
-			for c := 0; c < waiting.colCount(); c++ {
-				waiting.makeDecision(r, c)
-			}
-		}
-
-		waiting.flipMarked()
-
-		//printState(waiting)
-
-		if !waiting.peopleMoved() {
-			break
-		}
-		//time.Sleep(time.Second)
-		//fmt.Println()
-	}
-
-	fmt.Println(countOcupied(waiting))
 }
 
 func printState(waiting *waitingArea) {
