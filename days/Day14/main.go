@@ -103,8 +103,8 @@ func part2(lines []string) uint64 {
 			}
 		}
 
-		for _, address := range addresses {
-			memory[address] = value
+		for _, a := range addresses {
+			memory[a] = value
 		}
 	}
 
