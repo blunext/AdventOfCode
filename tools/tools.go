@@ -53,3 +53,12 @@ func CombineLines(lines []string) []string {
 	}
 	return set
 }
+
+func GetBit(val uint64, index int) uint64 {
+	mask := uint64(1) << index
+	return (val & mask) >> index
+}
+
+func SetBit(val uint64, index int) uint64 {
+	return val | (1 << index)
+}

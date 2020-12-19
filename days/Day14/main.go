@@ -3,44 +3,47 @@ package Day14
 import (
 	"Go-AdventOfCode2020/tools"
 	"fmt"
+	"regexp"
 	"strconv"
 	"strings"
 )
-
-func convertMask(m string) (uint64, uint64) {
-	return 0, 0
-}
 
 func Goooo() {
 	fmt.Println("--------- DAY 14 ---------")
 	//lines := tools.ReadFile(("days/Day14/testInput.txt"))
 	lines := tools.ReadFile(("days/Day14/input.txt"))
 
-	memory := make(map[int64]int64)
-	andMask := int64(0)
-	orMask := int64(0)
+	i := part1(lines)
+	fmt.Printf("part 1: %d\n", i)
+
+	i = part2(lines)
+	fmt.Printf("part 2: %d\n", i)
+}
+
+func part1(lines []string) uint64 {
+	memory := make(map[uint64]uint64)
+	andMask := uint64(0)
+	orMask := uint64(0)
 	for _, line := range lines {
 		if strings.Contains(line, "mask") {
-			andMask, orMask = getMasks(line)
+			andMask, orMask = getBitMasks(line)
 			//fmt.Printf("andMask: %d, orMask: %d\n", andMask, orMask)
 			continue
 		}
-		mem, val := getInstruction(line)
+		address, val := getInstruction(line)
 
-		memory[mem] = val&andMask | orMask
+		memory[address] = val&andMask | orMask
 		//fmt.Printf("mem: %d, val, %d\n", mem, val)
 	}
 
-	i := int64(0)
+	i := uint64(0)
 	for _, v := range memory {
 		i += v
 	}
-
-	fmt.Printf("part 1: %d\n", i)
-
+	return i
 }
 
-func getMasks(line string) (int64, int64) {
+func getBitMasks(line string) (uint64, uint64) {
 	t := strings.Split(line, "=")
 	t[1] = strings.TrimSpace(t[1])
 
@@ -49,16 +52,70 @@ func getMasks(line string) (int64, int64) {
 
 	andVal, _ := strconv.ParseInt(andMask, 2, 64)
 	orVal, _ := strconv.ParseInt(orMask, 2, 64)
-
-	return andVal, orVal
+	return uint64(andVal), uint64(orVal)
 }
 
-func getInstruction(line string) (int64, int64) {
+func getInstruction(line string) (uint64, uint64) {
 	t := strings.Split(line, "=")
 	m := strings.Replace(strings.TrimSpace(t[0]), "mem[", "", 1)
 	m = strings.Replace(m, "]", "", 1)
 
 	mem, _ := strconv.Atoi(m)
 	val, _ := strconv.Atoi(strings.TrimSpace(t[1]))
-	return int64(mem), int64(val)
+	return uint64(mem), uint64(val)
 }
+
+func part2(lines []string) uint64 {
+	memory := make(map[uint64]uint64)
+
+	var mask string
+	for _, line := range lines {
+		maskPattern := maskRgx.FindStringSubmatch(line)
+		if len(maskPattern) != 0 {
+			mask = maskPattern[1]
+			continue
+		}
+
+		memMatch := memRgx.FindStringSubmatch(line)
+
+		address, _ := strconv.ParseUint(memMatch[1], 10, 64)
+
+		addresses := []uint64{0}
+
+		for i := 0; i < 36; i++ {
+			bitIndex := 35 - i
+			switch mask[i] {
+			case '0':
+				for j := range addresses {
+					if tools.GetBit(address, bitIndex) == 1 {
+						addresses[j] = tools.SetBit(addresses[j], bitIndex)
+					}
+				}
+			case '1':
+				for j := range addresses {
+					addresses[j] = tools.SetBit(addresses[j], bitIndex)
+				}
+			case 'X':
+				for j := range addresses {
+					addresses = append(addresses, addresses[j])
+					addresses[j] = tools.SetBit(addresses[j], bitIndex)
+				}
+			}
+		}
+
+		value, _ := strconv.ParseUint(memMatch[2], 10, 64)
+
+		for _, address := range addresses {
+			memory[address] = value
+		}
+	}
+
+	var sum uint64
+	for _, val := range memory {
+		sum += val
+	}
+	return sum
+}
+
+var maskRgx = regexp.MustCompile("^mask = (.+)$")
+var memRgx = regexp.MustCompile("^mem\\[(\\d+)\\] = (\\d+)$")
