@@ -3,7 +3,6 @@ package Day14
 import (
 	"Go-AdventOfCode2020/tools"
 	"fmt"
-	"regexp"
 	"strconv"
 	"strings"
 )
@@ -44,15 +43,19 @@ func part1(lines []string) uint64 {
 }
 
 func getBitMasks(line string) (uint64, uint64) {
-	t := strings.Split(line, "=")
-	t[1] = strings.TrimSpace(t[1])
-
-	andMask := strings.ReplaceAll(t[1], "X", "1")
-	orMask := strings.ReplaceAll(t[1], "X", "0")
+	mask := getMask(line)
+	andMask := strings.ReplaceAll(mask, "X", "1")
+	orMask := strings.ReplaceAll(mask, "X", "0")
 
 	andVal, _ := strconv.ParseInt(andMask, 2, 64)
 	orVal, _ := strconv.ParseInt(orMask, 2, 64)
 	return uint64(andVal), uint64(orVal)
+}
+
+func getMask(line string) string {
+	t := strings.Split(line, "=")
+	t[1] = strings.TrimSpace(t[1])
+	return t[1]
 }
 
 func getInstruction(line string) (uint64, uint64) {
@@ -70,15 +73,12 @@ func part2(lines []string) uint64 {
 
 	var mask string
 	for _, line := range lines {
-		maskPattern := maskRgx.FindStringSubmatch(line)
-		if len(maskPattern) != 0 {
-			mask = maskPattern[1]
+		if strings.Contains(line, "mask") {
+			mask = getMask(line)
 			continue
 		}
 
-		memMatch := memRgx.FindStringSubmatch(line)
-
-		address, _ := strconv.ParseUint(memMatch[1], 10, 64)
+		address, value := getInstruction(line)
 
 		addresses := []uint64{0}
 
@@ -103,8 +103,6 @@ func part2(lines []string) uint64 {
 			}
 		}
 
-		value, _ := strconv.ParseUint(memMatch[2], 10, 64)
-
 		for _, address := range addresses {
 			memory[address] = value
 		}
@@ -116,6 +114,3 @@ func part2(lines []string) uint64 {
 	}
 	return sum
 }
-
-var maskRgx = regexp.MustCompile("^mask = (.+)$")
-var memRgx = regexp.MustCompile("^mem\\[(\\d+)\\] = (\\d+)$")
