@@ -14,7 +14,7 @@ func Goooo() {
 	preamble := 25
 	lines := tools.ReadFile(("days/Day09/input.txt"))
 
-	intLines := tools.ConvertIntoInts(lines)
+	intLines := tools.ConvertStrArrayIntoInts(lines)
 
 	firstNumber := findFirstThatNotSUm(preamble, intLines)
 	fmt.Printf("%d\n", firstNumber)

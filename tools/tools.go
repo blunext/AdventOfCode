@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"strings"
 )
 
 func ReadFile(path string) []string {
@@ -24,7 +25,7 @@ func ReadFile(path string) []string {
 	return txtlines
 }
 
-func ConvertIntoInts(lines []string) []int {
+func ConvertStrArrayIntoInts(lines []string) []int {
 	ints := []int{}
 	for _, s := range lines {
 		i, err := strconv.Atoi(s)
@@ -61,4 +62,16 @@ func GetBit(val uint64, index int) uint64 {
 
 func SetBit(val uint64, index int) uint64 {
 	return val | (1 << index)
+}
+
+func ConvertCommaSeparatedStrIntoInts(line string) []int {
+	ints := []int{}
+	for _, s := range strings.Split(line, ",") {
+		i, err := strconv.Atoi(s)
+		if err != nil {
+			panic(err)
+		}
+		ints = append(ints, i)
+	}
+	return ints
 }

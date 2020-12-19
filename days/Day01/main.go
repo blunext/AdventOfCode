@@ -9,7 +9,7 @@ func Goooo() {
 	fmt.Println("--------- DAY 02 ---------")
 
 	lines := tools.ReadFile("days/Day01/input.txt")
-	ints := tools.ConvertIntoInts(lines)
+	ints := tools.ConvertStrArrayIntoInts(lines)
 
 	for _, x := range ints {
 		for _, y := range ints {

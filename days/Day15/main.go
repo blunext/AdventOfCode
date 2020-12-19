@@ -18,8 +18,8 @@ func Goooo() {
 	lastSpoken := findNumber(input, 2020)
 	fmt.Printf("Part 1: %d\n", lastSpoken)
 
-	lastSpoken = findNumber(input, 30000000)
-	fmt.Printf("Part 2: %d\n", lastSpoken)
+	//lastSpoken = findNumber(input, 30000000)
+	fmt.Printf("Part 2: %d <- want to find real finding, uncomment findNumber function\n", lastSpoken)
 
 }
 
@@ -27,7 +27,7 @@ func findNumber(input string, matchOccurange int) int {
 	memory := make(map[int]*number)
 	lastSpoken := 0
 	i := 1
-	for _, lastSpoken = range tools.ConvertIntoInts(strings.Split(input, ",")) {
+	for _, lastSpoken = range tools.ConvertStrArrayIntoInts(strings.Split(input, ",")) {
 		memory[lastSpoken] = &number{pos: i, count: 1}
 		i++
 	}

@@ -9,8 +9,8 @@ import (
 func Goooo() {
 	fmt.Println("--------- DAY 10 ---------\n")
 
-	//lines := tools.ConvertIntoInts(tools.ReadFile(("days/Day10/testInput.txt")))
-	lines := tools.ConvertIntoInts(tools.ReadFile(("days/Day10/input.txt")))
+	//lines := tools.ConvertStrArrayIntoInts(tools.ReadFile(("days/Day10/testInput.txt")))
+	lines := tools.ConvertStrArrayIntoInts(tools.ReadFile(("days/Day10/input.txt")))
 
 	sort.Slice(lines, func(i, j int) bool {
 		return lines[i] < lines[j]

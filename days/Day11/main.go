@@ -8,7 +8,7 @@ import (
 func Goooo() {
 	fmt.Println("--------- DAY 11 ---------")
 
-	//lines := tools.ConvertIntoInts(tools.ReadFile(("days/Day10/testInput.txt")))
+	//lines := tools.ConvertStrArrayIntoInts(tools.ReadFile(("days/Day10/testInput.txt")))
 	//lines := tools.ReadFile(("days/Day11/testInput.txt"))
 	lines := tools.ReadFile(("days/Day11/input.txt"))
 
