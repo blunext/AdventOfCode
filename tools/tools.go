@@ -75,3 +75,7 @@ func ConvertCommaSeparatedStrIntoInts(line string) []int {
 	}
 	return ints
 }
+
+func RemoveSlice(slice [][]int, s int) [][]int {
+	return append(slice[:s], slice[s+1:]...)
+}
