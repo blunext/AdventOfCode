@@ -8,6 +8,10 @@ import (
 	"strings"
 )
 
+func GetSliceOfInts(path string) []int {
+	return ConvertStrArrayIntoInts(ReadFile(path))
+}
+
 func ReadFile(path string) []string {
 	file, err := os.Open(path)
 	if err != nil {
