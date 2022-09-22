@@ -2,6 +2,8 @@ package tools
 
 import (
 	"bufio"
+	"fmt"
+	"io"
 	"log"
 	"os"
 	"strconv"
@@ -17,6 +19,8 @@ func ReadFile(path string) []string {
 	if err != nil {
 		log.Fatalf("failed opening file: %s", err)
 	}
+	defer file.Close()
+
 	scanner := bufio.NewScanner(file)
 	scanner.Split(bufio.ScanLines)
 	var txtlines []string
@@ -24,9 +28,45 @@ func ReadFile(path string) []string {
 	for scanner.Scan() {
 		txtlines = append(txtlines, scanner.Text())
 	}
-	file.Close()
 
 	return txtlines
+}
+
+func ReadByWords(path string, len int) [][]string {
+	file, err := os.Open(path)
+	if err != nil {
+		log.Fatalf("failed opening file: %s", err)
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	scanner.Split(bufio.ScanLines)
+	var txtlines [][]string
+
+	for scanner.Scan() {
+		r := strings.NewReader(scanner.Text())
+		words, err := readWords(r, len)
+		if err != nil {
+			fmt.Printf("Fscanf err: %v\n", err)
+		}
+		var lineArr []string
+		for _, t := range words {
+			lineArr = append(lineArr, t)
+		}
+		txtlines = append(txtlines, lineArr)
+	}
+	return txtlines
+}
+
+func readWords(r io.Reader, n int) ([]string, error) {
+	in := make([]string, n)
+	for i := range in {
+		_, err := fmt.Fscan(r, &in[i])
+		if err != nil {
+			return in[:i], err
+		}
+	}
+	return in, nil
 }
 
 func ConvertStrArrayIntoInts(lines []string) []int {
@@ -82,4 +122,12 @@ func ConvertCommaSeparatedStrIntoInts(line string) []int {
 
 func RemoveSlice(slice [][]int, s int) [][]int {
 	return append(slice[:s], slice[s+1:]...)
+}
+
+func StrToInt(s string) int {
+	i, err := strconv.Atoi(s)
+	if err != nil {
+		log.Fatalf("String conv to int err: ", err)
+	}
+	return i
 }
