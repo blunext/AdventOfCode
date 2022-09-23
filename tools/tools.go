@@ -81,6 +81,22 @@ func ConvertStrArrayIntoInts(lines []string) []int {
 	return ints
 }
 
+func parseBits(s string) int64 {
+	i, err := strconv.ParseInt(s, 2, 16)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return i
+}
+
+func ConvertBitsIntoInt64(lines []string) []int64 {
+	var ints []int64
+	for _, s := range lines {
+		ints = append(ints, parseBits(s))
+	}
+	return ints
+}
+
 func CombineLines(lines []string) []string {
 	set := []string{}
 	new := true

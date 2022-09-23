@@ -35,7 +35,6 @@ func execute(command command, value int) {
 	aim += command.aim * value
 	horizontalPos += command.horizontalPos * value
 	depth += command.depth * aim * value
-
 }
 
 func getCommand(commandName string) command {
