@@ -45,7 +45,7 @@ func ReadByWords(path string, len int) [][]string {
 
 	for scanner.Scan() {
 		r := strings.NewReader(scanner.Text())
-		words, err := readWords(r, len)
+		words, err := ReadWordsFromLine(r, len)
 		if err != nil {
 			fmt.Printf("Fscanf err: %v\n", err)
 		}
@@ -58,7 +58,7 @@ func ReadByWords(path string, len int) [][]string {
 	return txtlines
 }
 
-func readWords(r io.Reader, n int) ([]string, error) {
+func ReadWordsFromLine(r io.Reader, n int) ([]string, error) {
 	in := make([]string, n)
 	for i := range in {
 		_, err := fmt.Fscan(r, &in[i])
@@ -143,7 +143,7 @@ func RemoveSlice(slice [][]int, s int) [][]int {
 func StrToInt(s string) int {
 	i, err := strconv.Atoi(s)
 	if err != nil {
-		log.Fatalf("String conv to int err: ", err)
+		log.Fatal("String conv to int err: ", err)
 	}
 	return i
 }
