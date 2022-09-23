@@ -19,5 +19,4 @@ func TestDataA(t *testing.T) {
 	assert.Equal(t, 4512, game(boards, numbers, true))
 	boards = populateBoards(data[1:])
 	assert.Equal(t, 1924, game(boards, numbers, false))
-
 }
