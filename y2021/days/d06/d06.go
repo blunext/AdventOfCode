@@ -7,30 +7,43 @@ import (
 	"AdventOfCode/tools"
 )
 
-func process(fishes []int8, days int) int {
-	// fmt.Print(strings.Trim(fmt.Sprint(fishes), "[]"))
-	// fmt.Println()
+func process(fishes []int, days int) int {
+	groups := initGroups(fishes)
 
-	var fishesOfNewDay []int8
-
+	var newGroups []int
+	newGroups = append(newGroups, groups...)
 	for d := 0; d < days; d++ {
-		fishesOfNewDay = []int8{}
-		fishesOfNewDay = append(fishesOfNewDay, fishes...)
-
-		for i := range fishes {
-			fishesOfNewDay[i]--
-			if fishesOfNewDay[i] == -1 {
-				fishesOfNewDay[i] = 6
-				fishesOfNewDay = append(fishesOfNewDay, 8)
+		for i := 8; i >= 0; i-- {
+			switch i {
+			case 0:
+				newGroups[6] += groups[0]
+				newGroups[8] = groups[0]
+			default:
+				newGroups[i-1] = groups[i]
 			}
 		}
-		fishes = []int8{}
-		fishes = append(fishes, fishesOfNewDay...)
-
-		// fmt.Print(strings.Trim(fmt.Sprint(fishes), "[]"))
-		// fmt.Println()
+		groups = []int{}
+		groups = append(groups, newGroups...)
 	}
-	return len(fishesOfNewDay)
+	// fmt.Print(strings.Trim(fmt.Sprint(groups), "[]"))
+	// fmt.Println()
+	return count(groups)
+}
+
+func count(groups []int) int {
+	var c int
+	for _, g := range groups {
+		c += g
+	}
+	return c
+}
+
+func initGroups(fishes []int) []int {
+	groups := []int{0, 0, 0, 0, 0, 0, 0, 0, 0}
+	for _, f := range fishes {
+		groups[f]++
+	}
+	return groups
 }
 
 func Main() {
@@ -40,11 +53,11 @@ func Main() {
 	}()
 	fmt.Println("DAY #6 A")
 	data := tools.ReadFile("y2021/days/d06/data.txt")
-	fishes := tools.ConvertCommaSeparatedStrIntoInts8(data[0])
+	fishes := tools.ConvertCommaSeparatedStrIntoInts(data[0])
 	fmt.Printf("result: %d\n", process(fishes, 80))
 
 	fmt.Println("DAY #6 B")
-	fishes = tools.ConvertCommaSeparatedStrIntoInts8(data[0])
+	fishes = tools.ConvertCommaSeparatedStrIntoInts(data[0])
 	fmt.Printf("result: %d\n", process(fishes, 256))
 
 }

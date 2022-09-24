@@ -10,7 +10,7 @@ import (
 
 func TestData(t *testing.T) {
 	data := tools.ReadFile("test.txt")
-	fishes := tools.ConvertCommaSeparatedStrIntoInts8(data[0])
+	fishes := tools.ConvertCommaSeparatedStrIntoInts(data[0])
 	assert.Len(t, fishes, 5)
 
 	assert.Equal(t, 26, process(fishes, 18))
