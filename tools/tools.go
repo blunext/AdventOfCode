@@ -136,6 +136,17 @@ func ConvertCommaSeparatedStrIntoInts(line string) []int {
 	return ints
 }
 
+func ConvertCommaSeparatedStrIntoInts8(line string) []int8 {
+	var ints []int8
+	for _, s := range strings.Split(line, ",") {
+		i, err := strconv.Atoi(s)
+		if err != nil {
+			panic(err)
+		}
+		ints = append(ints, int8(i))
+	}
+	return ints
+}
 func RemoveSlice(slice [][]int, s int) [][]int {
 	return append(slice[:s], slice[s+1:]...)
 }

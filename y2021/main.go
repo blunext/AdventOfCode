@@ -1,7 +1,7 @@
 package y2021
 
 import (
-	"AdventOfCode/y2021/days/d05"
+	"AdventOfCode/y2021/days/d06"
 )
 
 func Main() {
@@ -10,5 +10,6 @@ func Main() {
 	// d02b.Main()
 	// d03.Main()
 	// d04.Main()
-	d05.Main()
+	// d05.Main()
+	d06.Main()
 }

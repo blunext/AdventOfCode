@@ -39,5 +39,4 @@ func TestDataA(t *testing.T) {
 
 	board = mapVectors(vectors, true)
 	assert.Equal(t, 12, countOverlaps(board))
-
 }
