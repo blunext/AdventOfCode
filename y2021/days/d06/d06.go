@@ -59,5 +59,4 @@ func Main() {
 	fmt.Println("DAY #6 B")
 	fishes = tools.ConvertCommaSeparatedStrIntoInts(data[0])
 	fmt.Printf("result: %d\n", process(fishes, 256))
-
 }

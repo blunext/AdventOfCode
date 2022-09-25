@@ -16,5 +16,4 @@ func TestData(t *testing.T) {
 	assert.Equal(t, 26, process(fishes, 18))
 	assert.Equal(t, 5934, process(fishes, 80))
 	assert.Equal(t, 26984457539, process(fishes, 256))
-
 }
