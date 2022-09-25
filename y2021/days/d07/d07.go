@@ -59,5 +59,4 @@ func Main() {
 	fmt.Println("DAY #7 B")
 	crabs = tools.ConvertCommaSeparatedStrIntoInts(data[0])
 	fmt.Printf("result: %v\n", int(processNonLinearFuel(crabs)))
-
 }

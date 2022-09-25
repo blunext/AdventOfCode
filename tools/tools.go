@@ -148,6 +148,13 @@ func ConvertCommaSeparatedStrIntoInts8(line string) []int8 {
 	return ints
 }
 
+func ConvertIntSliceToString(ints []int) string {
+	var result string
+	for _, s := range ints {
+		result = result + strconv.Itoa(s)
+	}
+	return result
+}
 func ConvertIntSliceToFloat64(ints []int) []float64 {
 	var result []float64
 	for i := range ints {
