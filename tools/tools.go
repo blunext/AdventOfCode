@@ -136,6 +136,18 @@ func ConvertCommaSeparatedStrIntoInts(line string) []int {
 	return ints
 }
 
+func ConvertStrOfDigitsToInts(line string) []int {
+	ints := []int{}
+	for _, character := range line {
+		i, err := strconv.Atoi(string(character))
+		if err != nil {
+			panic(err)
+		}
+		ints = append(ints, i)
+	}
+	return ints
+}
+
 func ConvertCommaSeparatedStrIntoInts8(line string) []int8 {
 	var ints []int8
 	for _, s := range strings.Split(line, ",") {

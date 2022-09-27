@@ -145,5 +145,4 @@ func Main() {
 	fmt.Printf("result: %v\n", processA(data))
 	fmt.Println("DAY #8 B")
 	fmt.Printf("result: %v\n", processB(data))
-
 }
