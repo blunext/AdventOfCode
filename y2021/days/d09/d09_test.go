@@ -24,4 +24,11 @@ func TestData(t *testing.T) {
 
 	process(matrix)
 	assert.Equal(t, 15, riskPoints(matrix))
+
+	makeRain(matrix)
+	basins := countBasinSizes(matrix)
+	assert.Len(t, basins, 4)
+
+	assert.Equal(t, 1134, threeLargestBasinMultiplied(basins))
+
 }
