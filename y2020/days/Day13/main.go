@@ -10,8 +10,8 @@ import (
 
 func Goooo() {
 	fmt.Println("--------- DAY 13 ---------")
-	// lines := tools.ReadFile(("y2020/days/Day13/testInput.txt"))
-	lines := tools.ReadFile(("y2020/days/Day13/input.txt"))
+	// lines := tools.ReadLines(("y2020/days/Day13/testInput.txt"))
+	lines := tools.ReadLines(("y2020/days/Day13/input.txt"))
 
 	wait := part1(lines)
 	fmt.Printf("part 1: %d\n", wait)

@@ -9,9 +9,9 @@ import (
 func Goooo() {
 	fmt.Println("--------- DAY 11 ---------")
 
-	// lines := tools.ConvertStrArrayIntoInts(tools.ReadFile(("y2020/days/Day10/testInput.txt")))
-	// lines := tools.ReadFile(("y2020/days/Day11/testInput.txt"))
-	lines := tools.ReadFile(("y2020/days/Day11/input.txt"))
+	// lines := tools.ConvertStrArrayIntoInts(tools.ReadLines(("y2020/days/Day10/testInput.txt")))
+	// lines := tools.ReadLines(("y2020/days/Day11/testInput.txt"))
+	lines := tools.ReadLines(("y2020/days/Day11/input.txt"))
 
 	w := newWaitingArea()
 	w.addRow()

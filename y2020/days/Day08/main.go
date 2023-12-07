@@ -68,8 +68,8 @@ func (a acc) getValue() int {
 
 func Goooo() {
 	fmt.Println("--------- DAY 08 ---------")
-	// lines := tools.ReadFile(("y2020/days/Day08/testInput.txt"))
-	lines := tools.ReadFile(("y2020/days/Day08/Input.txt"))
+	// lines := tools.ReadLines(("y2020/days/Day08/testInput.txt"))
+	lines := tools.ReadLines(("y2020/days/Day08/Input.txt"))
 
 	start := time.Now()
 	myProgram := populateProgram(lines)

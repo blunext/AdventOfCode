@@ -15,8 +15,8 @@ type rule struct {
 
 func Goooo() {
 	fmt.Println("--------- DAY 19 ---------")
-	// lines := tools.ReadFile(("y2020/days/Day19/testInput.txt"))
-	lines := tools.ReadFile(("y2020/days/Day19/input.txt"))
+	// lines := tools.ReadLines(("y2020/days/Day19/testInput.txt"))
+	lines := tools.ReadLines(("y2020/days/Day19/input.txt"))
 
 	rules, index := initRules(lines)
 

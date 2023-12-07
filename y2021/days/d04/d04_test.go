@@ -9,7 +9,7 @@ import (
 )
 
 func TestDataA(t *testing.T) {
-	data := tools.ReadFile("test.txt")
+	data := tools.ReadLines("test.txt")
 	numbers := tools.ConvertCommaSeparatedStrIntoInts(data[0])
 	assert.Len(t, numbers, 27)
 	boards := populateBoards(data[1:])

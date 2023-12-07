@@ -72,13 +72,13 @@ func (h *bagsHolder) countInnerBags(name string) int {
 
 func Goooo() {
 	fmt.Println("--------- DAY 07 ---------")
-	// lines := tools.ReadFile(("y2020/days/Day07/testinput.txt"))
-	lines := tools.ReadFile(("y2020/days/Day07/input.txt"))
+	// lines := tools.ReadLines(("y2020/days/Day07/testinput.txt"))
+	lines := tools.ReadLines(("y2020/days/Day07/input.txt"))
 
 	holder := populateData(lines)
 	fmt.Printf("count part a=%d\n", holder.countBagsHolding("shiny gold"))
 
-	lines = tools.ReadFile(("y2020/days/Day07/input.txt"))
+	lines = tools.ReadLines(("y2020/days/Day07/input.txt"))
 	holder = populateData(lines)
 	fmt.Printf("count part b=%d\n", holder.countInnerBags("shiny gold")-1)
 }

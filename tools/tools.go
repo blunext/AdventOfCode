@@ -11,10 +11,10 @@ import (
 )
 
 func GetSliceOfInts(path string) []int {
-	return ConvertStrArrayIntoInts(ReadFile(path))
+	return ConvertStrArrayIntoInts(ReadLines(path))
 }
 
-func ReadFile(path string) []string {
+func ReadLines(path string) []string {
 	file, err := os.Open(path)
 	if err != nil {
 		log.Fatalf("failed opening file: %s", err)
@@ -185,4 +185,12 @@ func StrToInt(s string) int {
 		log.Fatal("String conv to int err: ", err)
 	}
 	return i
+}
+
+func ReverseString(s string) string {
+	runes := []rune(s)
+	for i, j := 0, len(runes)-1; i < j; i, j = i+1, j-1 {
+		runes[i], runes[j] = runes[j], runes[i]
+	}
+	return string(runes)
 }

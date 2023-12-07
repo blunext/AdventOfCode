@@ -9,6 +9,6 @@ import (
 )
 
 func TestData(t *testing.T) {
-	data := tools.ReadFile("test.txt")
+	data := tools.ReadLines("test.txt")
 	assert.Equal(t, 26397, process(data))
 }

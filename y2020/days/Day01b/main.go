@@ -8,7 +8,7 @@ import (
 
 func Goooo() {
 	fmt.Println("--------- DAY 02 ---------")
-	lines := tools.ReadFile(("y2020/days/Day01/input.txt"))
+	lines := tools.ReadLines(("y2020/days/Day01/input.txt"))
 	ints := tools.ConvertStrArrayIntoInts(lines)
 
 	for _, x := range ints {

@@ -133,7 +133,7 @@ func Main() {
 		fmt.Printf("Execution time: %v\n", time.Since(timeStart))
 	}()
 	fmt.Println("DAY #9 A")
-	data := tools.ReadFile("y2021/days/d09/data.txt")
+	data := tools.ReadLines("y2021/days/d09/data.txt")
 	matrix := prepareData(data)
 	process(matrix)
 	fmt.Printf("result: %v\n", riskPoints(matrix))

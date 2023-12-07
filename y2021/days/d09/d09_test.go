@@ -9,7 +9,7 @@ import (
 )
 
 func TestData(t *testing.T) {
-	data := tools.ReadFile("test.txt")
+	data := tools.ReadLines("test.txt")
 	width := 10
 	assert.Equal(t, width, len(data[0]))
 	matrix := prepareData(data)

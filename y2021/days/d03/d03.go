@@ -78,7 +78,7 @@ func processWithReduction(data []int64, bits int, reverseCheck bool) int64 {
 }
 
 func Main() {
-	data := tools.ConvertBitsIntoInt64(tools.ReadFile("y2021/days/d03/data.txt"))
+	data := tools.ConvertBitsIntoInt64(tools.ReadLines("y2021/days/d03/data.txt"))
 	fmt.Println("DAY #3 A")
 	gamma := process(data, 12, false)
 	epsilon := process(data, 12, true)

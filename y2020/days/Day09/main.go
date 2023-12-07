@@ -10,10 +10,10 @@ func Goooo() {
 	fmt.Println("--------- DAY 09 ---------")
 
 	// preamble := 5
-	// lines := tools.ReadFile(("y2020/days/Day09/testInput.txt"))
+	// lines := tools.ReadLines(("y2020/days/Day09/testInput.txt"))
 
 	preamble := 25
-	lines := tools.ReadFile(("y2020/days/Day09/input.txt"))
+	lines := tools.ReadLines(("y2020/days/Day09/input.txt"))
 
 	intLines := tools.ConvertStrArrayIntoInts(lines)
 

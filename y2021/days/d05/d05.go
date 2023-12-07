@@ -126,7 +126,7 @@ func diagonalVector(v vector) bool {
 
 func Main() {
 	fmt.Println("DAY #5 A")
-	data := tools.ReadFile("y2021/days/d05/data.txt")
+	data := tools.ReadLines("y2021/days/d05/data.txt")
 	vectors := getVectors(data)
 	board := mapVectors(vectors, false)
 	fmt.Printf("result: %d\n", countOverlaps(board))

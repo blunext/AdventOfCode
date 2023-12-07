@@ -25,9 +25,9 @@ type tickets struct {
 
 func Goooo() {
 	fmt.Println("--------- DAY 16 ---------")
-	// lines := tools.ReadFile(("y2020/days/Day16/testInput.txt"))
-	// lines := tools.ReadFile(("y2020/days/Day16/testInput2.txt"))
-	lines := tools.ReadFile(("y2020/days/Day16/input.txt"))
+	// lines := tools.ReadLines(("y2020/days/Day16/testInput.txt"))
+	// lines := tools.ReadLines(("y2020/days/Day16/testInput2.txt"))
+	lines := tools.ReadLines(("y2020/days/Day16/input.txt"))
 
 	rulesCollection, lineIndex := getRules(lines)
 

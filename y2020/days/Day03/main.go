@@ -37,7 +37,7 @@ func check(lines []string, xStep, yStep int) int {
 }
 func Goooo() {
 	fmt.Println("--------- DAY 03 ---------")
-	lines := tools.ReadFile(("y2020/days/Day03/input.txt"))
+	lines := tools.ReadLines(("y2020/days/Day03/input.txt"))
 	trees := check(lines, 3, 1)
 	fmt.Printf("trees=%d\n", trees)
 

@@ -51,7 +51,7 @@ func Main() {
 		fmt.Printf("Execution time: %v\n", time.Since(timeStart))
 	}()
 	fmt.Println("DAY #7 A")
-	data := tools.ReadFile("y2021/days/d07/data.txt")
+	data := tools.ReadLines("y2021/days/d07/data.txt")
 
 	crabs := tools.ConvertCommaSeparatedStrIntoInts(data[0])
 	fmt.Printf("result: %v\n", processLinearFuel(crabs))

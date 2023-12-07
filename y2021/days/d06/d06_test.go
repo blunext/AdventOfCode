@@ -9,7 +9,7 @@ import (
 )
 
 func TestData(t *testing.T) {
-	data := tools.ReadFile("test.txt")
+	data := tools.ReadLines("test.txt")
 	fishes := tools.ConvertCommaSeparatedStrIntoInts(data[0])
 	assert.Len(t, fishes, 5)
 

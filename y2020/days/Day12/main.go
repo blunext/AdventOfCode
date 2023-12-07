@@ -98,8 +98,8 @@ func (s *ship) moveWithWaypoint(instr string) {
 }
 func Goooo() {
 	fmt.Println("--------- DAY 12 ---------")
-	// lines := tools.ReadFile(("y2020/days/Day12/testInput.txt"))
-	lines := tools.ReadFile(("y2020/days/Day12/input.txt"))
+	// lines := tools.ReadLines(("y2020/days/Day12/testInput.txt"))
+	lines := tools.ReadLines(("y2020/days/Day12/input.txt"))
 	ship := newShip()
 	for _, instr := range lines {
 		ship.move(instr)

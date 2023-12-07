@@ -14,8 +14,8 @@ type operator func(string) operation
 func Goooo() {
 	fmt.Println("--------- DAY 18 ---------")
 
-	// lines := tools.ReadFile(("y2020/days/Day18/testInput.txt"))
-	lines := tools.ReadFile(("y2020/days/Day18/input.txt"))
+	// lines := tools.ReadLines(("y2020/days/Day18/testInput.txt"))
+	lines := tools.ReadLines(("y2020/days/Day18/input.txt"))
 
 	sum := 0
 	for _, line := range lines {

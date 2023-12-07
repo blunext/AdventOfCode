@@ -28,8 +28,8 @@ var fieldsDefinition = map[string]params{
 func Goooo() {
 	fmt.Println("--------- DAY 04 ---------")
 
-	// lines := tools.ReadFile(("y2020/days/Day04/testInput.txt"))
-	lines := tools.ReadFile(("y2020/days/Day04/input.txt"))
+	// lines := tools.ReadLines(("y2020/days/Day04/testInput.txt"))
+	lines := tools.ReadLines(("y2020/days/Day04/input.txt"))
 
 	count := 0
 	passports := tools.CombineLines(lines)
@@ -56,8 +56,8 @@ func Goooo() {
 
 func goooo2() {
 	fmt.Println("--------- DAY 04 b---------")
-	lines := tools.ReadFile(("y2020/days/Day04/input.txt"))
-	// lines := tools.ReadFile(("y2020/days/Day04/testInputb.txt"))
+	lines := tools.ReadLines(("y2020/days/Day04/input.txt"))
+	// lines := tools.ReadLines(("y2020/days/Day04/testInputb.txt"))
 	count := 0
 	passLines := tools.CombineLines(lines)
 	for _, line := range passLines {

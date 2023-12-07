@@ -49,7 +49,7 @@ func check2(test string) bool {
 
 func Goooo() {
 	fmt.Println("--------- DAY 02 ---------")
-	lines := tools.ReadFile(("y2020/days/Day02/input.txt"))
+	lines := tools.ReadLines(("y2020/days/Day02/input.txt"))
 
 	i := 0
 	for _, line := range lines {

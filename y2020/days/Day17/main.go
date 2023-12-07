@@ -11,8 +11,8 @@ import (
 func Goooo() {
 	fmt.Println("--------- DAY 17 ---------")
 
-	// lines := tools.ReadFile(("y2020/days/Day17/testInput.txt"))
-	lines := tools.ReadFile(("y2020/days/Day17/input.txt"))
+	// lines := tools.ReadLines(("y2020/days/Day17/testInput.txt"))
+	lines := tools.ReadLines(("y2020/days/Day17/input.txt"))
 
 	grid := threeD.NewGrid()
 

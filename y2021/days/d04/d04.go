@@ -168,7 +168,7 @@ func draw(board board) {
 
 func Main() {
 	fmt.Println("DAY #4 A")
-	data := tools.ReadFile("y2021/days/d04/data.txt")
+	data := tools.ReadLines("y2021/days/d04/data.txt")
 	numbers := tools.ConvertCommaSeparatedStrIntoInts(data[0])
 	boards := populateBoards(data[1:])
 	result := game(boards, numbers, true)

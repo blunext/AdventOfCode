@@ -141,7 +141,7 @@ func Main() {
 		fmt.Printf("Execution time: %v\n", time.Since(timeStart))
 	}()
 	fmt.Println("DAY #8 A")
-	data := tools.ReadFile("y2021/days/d08/data.txt")
+	data := tools.ReadLines("y2021/days/d08/data.txt")
 	fmt.Printf("result: %v\n", processA(data))
 	fmt.Println("DAY #8 B")
 	fmt.Printf("result: %v\n", processB(data))

@@ -30,7 +30,7 @@ func getSeatId(s string) int {
 
 func Goooo() {
 	fmt.Println("--------- DAY 05 ---------")
-	lines := tools.ReadFile(("y2020/days/Day05/input.txt"))
+	lines := tools.ReadLines(("y2020/days/Day05/input.txt"))
 
 	seats := make(map[int]bool)
 	max := 0

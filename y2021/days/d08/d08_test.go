@@ -21,7 +21,7 @@ func TestData(t *testing.T) {
 		8: 7*
 		9: 6
 	*/
-	data := tools.ReadFile("test.txt")
+	data := tools.ReadLines("test.txt")
 	assert.Equal(t, 26, processA(data))
 	assert.Equal(t, 61229, processB(data))
 

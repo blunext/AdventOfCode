@@ -9,7 +9,7 @@ import (
 )
 
 func TestDataA(t *testing.T) {
-	data := tools.ReadFile("test.txt")
+	data := tools.ReadLines("test.txt")
 	vectors := getVectors(data)
 	assert.Len(t, vectors, 10)
 
